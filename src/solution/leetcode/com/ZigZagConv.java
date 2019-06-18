@@ -1,42 +1,83 @@
 package solution.leetcode.com;
 
-import java.util.*;
-
 public class ZigZagConv {
     public static void main(String[] args) {
         String s = "PAYPALISHIRING";
+//        String s = "A";
         ZigZagConv z = new ZigZagConv();
-        System.out.println(z.convert(s, 4));
-//        Map<Integer, List<Integer>> map = new HashMap<>();
-//        map.getOrDefault(1,new ArrayList<Integer>()).add(1);
-//        System.out.println(map.get(1).toString());
+        System.out.println(z.convert2(s, 3));
 
-//        Map<Integer, Integer> map1 = new HashMap<Integer, Integer>();
-//        map1.put(1, map1.getOrDefault(1,1));
-//        System.out.println(map1.get(1));
 
     }
+    public String convert2(String s, int numRows) {
+        StringBuilder[] sbs = new StringBuilder[numRows];
+        int c = 0;
+        for (int i = 0; i < numRows ; i++){
+            sbs[i] = new StringBuilder();
+        }
+
+        for (int i = 0; i < numRows && c < s.length(); i++){
+            i = 0;
+            while (i < numRows && c < s.length()){
+                sbs[i++].append(s.charAt(c++));
+            }
+            i = numRows -2 ;
+            while (i > 0 && c < s.length()){
+                sbs[i--].append(s.charAt(c++));
+            }
+
+        }
+        StringBuilder t = new StringBuilder();
+        for (StringBuilder sb : sbs){
+            t.append(sb);
+        }
+
+
+        return t.toString();
+
+    }
+
+
     public String convert(String s, int numRows) {
-        char[] cs = s.toCharArray();
-        Map<Integer, List<Character>> map = new HashMap<>();
-
-
-        for (int i= 0; i < cs.length; i++){
-            map.put(i%numRows, map.getOrDefault(i%numRows, new ArrayList<>()));
-            List<Character> l = map.get(i%numRows);
-            l.add(cs[i]);
-
+        String ret = "";
+        if(s == null || s.isEmpty() || numRows < 0){
+            return ret;
         }
+        if(numRows == 1){
+            return s;
+        }
+        char[] ac = s.toCharArray();
         StringBuilder sb = new StringBuilder();
+        int j = 0;
+        for (int i = 0; i < numRows ; i++){
+            j = i;
+            if (j < s.length()){
+                sb.append(ac[j]);
+            }else {break;}
 
-        for (int i = 0; i < numRows; i++){
-            List<Character> l = map.get(i);
-            for (char c: l)
-            sb.append(c);
+            while (j < s.length()){
+                if(i <numRows - 1){
+                    j = j+2*(numRows-i) -2;
+                    if (j < s.length()){
+                        sb.append(ac[j]);
+                    }else {
+                        break;
+                    }
+                }
 
+                if (i > 0){
+                    j = j+2*i;
+                    if (j < s.length()){
+                        sb.append(ac[j]);
+                    }else {
+                        break;
+                    }
+                }
+
+            }
         }
+        ret = sb.toString();
 
-
-        return sb.toString();
+        return ret;
     }
 }
