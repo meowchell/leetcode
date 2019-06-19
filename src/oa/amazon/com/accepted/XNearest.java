@@ -1,13 +1,13 @@
-package oa.amazon.com;
+package oa.amazon.com.accepted;
 
 import java.util.*;
 
 public class XNearest {
     public static void main(String[] args) {
 //        int[][] locations = new int[][]{{1,4},{2,3},{0,5},{2,1}};
-        int[][] locations = new int[][]{{1,2},{3,4},{1,-1}};
+        int[][] locations = new int[][]{{1,2},{3,4},{1,-1},{1,-1}};
        XNearest x = new XNearest();
-        System.out.println(x.findNearest(3, locations, 2));
+        System.out.println(x.findNearest(4, locations, 2));
 
     }
 
@@ -56,6 +56,7 @@ public class XNearest {
         public LocationWithDistance(int[] location){
             this.location = location;
             this.distance = location[0]*location[0] + location[1]*location[1];
+
         }
 
     }
